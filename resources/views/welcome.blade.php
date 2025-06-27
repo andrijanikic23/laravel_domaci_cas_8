@@ -2,7 +2,7 @@
 @extends("layout")
 
 @section("page_title")
-    Homepage
+    Dashboardpage
 @endsection
 
 @section("page_content")

@@ -24,20 +24,19 @@ class ContactController extends Controller
         $request->validate([
             "email" => "required|string",
             "subject" => "required|string",
-            "description" => "required|string|min:5"
+            "message" => "required|string|min:5"
         ]);
-
 
         echo "Email: ".$request->get("email")." Naslov: ".$request->get("subject")." Poruka:" .$request->get("description");
 
         ContactModel::create([
             "email" => $request->get("email"),
             "subject" => $request->get("subject"),
-            "message" => $request->get("description")
+            "message" => $request->get("message")
         ]);
 
-        return redirect("/shop");
-       
+        return redirect("/admin/all-contacts");
+
     }
 
     public function delete($contact)
@@ -82,9 +81,9 @@ class ContactController extends Controller
         $contact->message = $request->get("message");
         $contact->save();
 
-        return redirect()->back();
+        return redirect("/admin/all-contacts");
 
 
-        
+
     }
 }

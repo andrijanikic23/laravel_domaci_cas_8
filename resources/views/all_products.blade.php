@@ -25,7 +25,7 @@
                     <td>{{ $product->price }} RSD</td>
                     <td>
                         <a href="/admin/delete-product/{{ $product->id }}" class="btn btn-danger">Delete</a>
-                        <a href="{{ route('product.single', ['id' => $product->id]) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ route('product.single', ['product' => $product->id]) }}" class="btn btn-primary">Edit</a>
                     </td>
                 </tr>
             @endforeach

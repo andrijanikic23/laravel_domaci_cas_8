@@ -19,8 +19,8 @@
             @foreach ($all_contacts as $contact)
                 <tr>
                     <td>{{ $contact->id }}</td>
-                    <td>{{ $contact->subject }}</td>
                     <td>{{ $contact->email }}</td>
+                    <td>{{ $contact->subject }}</td>
                     <td>{{ $contact->message }}</td>
                     <td>
                         <a href="/admin/delete-contact/{{ $contact->id }}" class="btn btn-danger">Delete</a>

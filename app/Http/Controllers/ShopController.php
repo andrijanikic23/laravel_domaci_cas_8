@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\ShopModel;
 
@@ -16,7 +17,7 @@ class ShopController extends Controller
     public function delete($product)
     {
         $single_product = ShopModel::where(['id' => $product])->first();
-        
+
         if($single_product === null)
         {
             die("OVAJ PROIZVOD NE POSTOJI!");
@@ -48,28 +49,13 @@ class ShopController extends Controller
 
         return redirect("/admin/all-products");
     }
-    public function single_product(Request $request, $id)
+    public function single_product(Request $request, ShopModel $product)
     {
-        $product = ShopModel::where(['id' => $id])->first();
-        
-        if($product === null)
-        {
-            die("Ovaj proizvod ne postoji");
-        }
-
-
         return view("products.edit", compact('product'));
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Request $request, ShopModel $product)
     {
-        $product = ShopModel::where(['id' => $id])->first();
-        
-        if($product === null)
-        {
-            die("Ovaj proizvod ne postoji");
-        }
-
         $product->name = $request->get("name");
         $product->description =$request->get("description");
         $product->amount = $request->get("amount");
@@ -77,8 +63,6 @@ class ShopController extends Controller
         $product->save();
 
         return redirect()->back();
-
-
     }
-    
+
 }
