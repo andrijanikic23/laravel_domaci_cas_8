@@ -42,7 +42,8 @@ Route::middleware(["auth", AdminCheckMiddleware::class])->prefix("admin")->group
     Route::post("/contact/save/{id}", [ContactController::class, "edit"])
         ->name("contact.save");
 
-    Route::post("/send-product", [ShopController::class, "add_product"]);
+    Route::post("/send-product", [ShopController::class, "add_product"])
+        ->name("product.send");
     Route::get("/all-contacts", [ContactController::class, 'get_all_contacts']);
 });
 

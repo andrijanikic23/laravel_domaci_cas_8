@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveShopRequest;
 use App\Models\User;
+use App\Repositories\ShopRepository;
 use Illuminate\Http\Request;
 use App\Models\ShopModel;
 
 class ShopController extends Controller
 {
+
+    private $shopRepo;
+
+    public function __construct()
+    {
+        $this->shopRepo = new ShopRepository();
+    }
     public function get_all_products()
     {
         $all_products = ShopModel::all();
@@ -16,7 +25,7 @@ class ShopController extends Controller
 
     public function delete($product)
     {
-        $single_product = ShopModel::where(['id' => $product])->first();
+        $single_product = $this->shopRepo->getProductById($product);
 
         if($single_product === null)
         {
@@ -31,21 +40,10 @@ class ShopController extends Controller
     }
 
 
-    public function add_product(Request $request)
+    public function add_product(SaveShopRequest $request)
     {
-        $request->validate([
-            "name" => "required|string|unique:products,name",
-            "description" => "required|string",
-            "amount" => "required|int|min:0",
-            "price" => "required|min:0"
-        ]);
 
-        ShopModel::create([
-            "name" => $request->get("name"),
-            "description" => $request->get("description"),
-            "amount" => $request->get("amount"),
-            "price" => $request->get("amount")
-        ]);
+        $this->shopRepo->createNew($request);
 
         return redirect("/admin/all-products");
     }
@@ -56,11 +54,7 @@ class ShopController extends Controller
 
     public function edit(Request $request, ShopModel $product)
     {
-        $product->name = $request->get("name");
-        $product->description =$request->get("description");
-        $product->amount = $request->get("amount");
-        $product->price =$request->get("price");
-        $product->save();
+        $this->shopRepo->editProduct($product, $request);
 
         return redirect()->back();
     }
