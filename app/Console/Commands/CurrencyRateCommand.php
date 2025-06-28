@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\ExchangeRatesModel;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -27,16 +29,24 @@ class CurrencyRateCommand extends Command
     public function handle()
     {
         $apiKey = env("EXCHANGE_RATE_API_KEY");
-        $euroResponse = Http::get("https://v6.exchangerate-api.com/v6/{$apiKey}/latest/EUR");
-        $dollarResponse = Http::get("https://v6.exchangerate-api.com/v6/{$apiKey}/latest/USD");
 
-        $euroJsonResponse = $euroResponse->json();
-        $dollarJsonResponse = $dollarResponse->json();
+        foreach(ExchangeRatesModel::AVAILABLE_CURRENCIES as $currency)
+        {
 
-        $euroExchangeResponse = $euroJsonResponse["conversion_rates"]["RSD"];
-        $dollarExchangeResponse = $dollarJsonResponse["conversion_rates"]["RSD"];
+            $todayCurrency = ExchangeRatesModel::getCurrencyForToday($currency);
 
-        $this->line("💶 Euro:   {$euroExchangeResponse} RSD");
-        $this->line("💵 Dollar: {$dollarExchangeResponse} RSD");
+            if($todayCurrency !== null)
+            {
+                continue;
+            }
+
+            $response = Http::get("https://v6.exchangerate-api.com/v6/{$apiKey}/latest/{$currency}");
+            ExchangeRatesModel::create([
+               "currency" => $currency,
+               "value" => $response->json()["conversion_rates"]["RSD"]
+            ]);
+        }
+
+
     }
 }
