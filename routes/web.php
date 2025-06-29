@@ -21,11 +21,11 @@ Route::view("/contact", "contact");
 
 Route::middleware(["auth", AdminCheckMiddleware::class])->prefix("admin")->group(function(){
 
-    Route::view("/add-product", "add_product");
+    Route::view("/product/add", "add_product");
     Route::controller(ShopController::class)->group(function(){
-        Route::get("/all-products", "getAllProducts")->name("allProducts");
-        Route::get("/delete-product/{product}", "delete");
-        Route::post("/send-product", "addProduct")->name("product.send");
+        Route::get("/product/all", "getAllProducts")->name("product.all");
+        Route::get("/product/delete/{product}", "delete")->name("product.delete");
+        Route::post("/product/send", "addProduct")->name("product.send");
         Route::get("/product/edit/{product}", "singleProduct")->name("product.single");
         Route::post("/product/save/{product}", "edit")->name("product.save");
     });

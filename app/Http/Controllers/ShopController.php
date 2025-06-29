@@ -45,7 +45,7 @@ class ShopController extends Controller
 
         $this->shopRepo->createNew($request);
 
-        return redirect("/admin/all-products");
+        return redirect()->route("product.all");
     }
     public function singleProduct(Request $request, ShopModel $product)
     {
