@@ -20,7 +20,7 @@ class ShopRepository
             "name" => $request->get("name"),
             "description" => $request->get("description"),
             "amount" => $request->get("amount"),
-            "price" => $request->get("amount")
+            "price" => $request->get("price")
         ]);
     }
 
