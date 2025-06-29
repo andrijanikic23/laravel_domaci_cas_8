@@ -1,7 +1,7 @@
 @extends("layout")
 
 @section("page_content")
-    <form method="POST" action="{{ route('send.contact') }}">
+    <form method="POST" action="{{ route('contact.send') }}">
         {{ csrf_field() }}
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>

@@ -17,7 +17,7 @@ class ShopController extends Controller
     {
         $this->shopRepo = new ShopRepository();
     }
-    public function get_all_products()
+    public function getAllProducts()
     {
         $all_products = ShopModel::all();
         return view("all_products", compact('all_products'));
@@ -40,14 +40,14 @@ class ShopController extends Controller
     }
 
 
-    public function add_product(SaveShopRequest $request)
+    public function addProduct(SaveShopRequest $request)
     {
 
         $this->shopRepo->createNew($request);
 
         return redirect("/admin/all-products");
     }
-    public function single_product(Request $request, ShopModel $product)
+    public function singleProduct(Request $request, ShopModel $product)
     {
         return view("products.edit", compact('product'));
     }

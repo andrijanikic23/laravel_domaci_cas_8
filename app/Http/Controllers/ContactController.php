@@ -22,7 +22,7 @@ class ContactController extends Controller
         return view("contact");
     }
 
-    public function get_all_contacts()
+    public function getAllContacts()
     {
         $all_contacts = ContactModel::all();
         return view("all_contacts", compact('all_contacts'));
@@ -34,7 +34,7 @@ class ContactController extends Controller
 
         $this->contactRepo->newContact($request);
 
-        return redirect("/admin/all-contacts");
+        return redirect()->route("contact.all");
 
     }
 
@@ -54,7 +54,7 @@ class ContactController extends Controller
         return redirect()->back();
     }
 
-    public function single_contact(Request $request, $id)
+    public function singleContact(Request $request, $id)
     {
         $contact = $this->contactRepo->singleContactInstance($id);
 
@@ -80,7 +80,7 @@ class ContactController extends Controller
 
 
 
-        return redirect("/admin/all-contacts");
+        return redirect()->route("contact.all");
 
 
 
