@@ -22,12 +22,12 @@ Route::view("/contact", "contact");
 Route::middleware(["auth", AdminCheckMiddleware::class])->prefix("admin")->group(function(){
 
     Route::view("/product/add", "add_product");
-    Route::controller(ShopController::class)->group(function(){
-        Route::get("/product/all", "getAllProducts")->name("product.all");
-        Route::get("/product/delete/{product}", "delete")->name("product.delete");
-        Route::post("/product/send", "addProduct")->name("product.send");
-        Route::get("/product/edit/{product}", "singleProduct")->name("product.single");
-        Route::post("/product/save/{product}", "edit")->name("product.save");
+    Route::controller(ShopController::class)->prefix("/product")->group(function(){
+        Route::get("/all", "getAllProducts")->name("product.all");
+        Route::get("/delete/{product}", "delete")->name("product.delete");
+        Route::post("/send", "addProduct")->name("product.send");
+        Route::get("/edit/{product}", "singleProduct")->name("product.single");
+        Route::post("/save/{product}", "edit")->name("product.save");
     });
 
 
