@@ -22,21 +22,21 @@ Route::view("/contact", "contact");
 Route::middleware(["auth", AdminCheckMiddleware::class])->prefix("admin")->group(function(){
 
     Route::view("/product/add", "add_product");
-    Route::controller(ShopController::class)->prefix("/product")->group(function(){
-        Route::get("/all", "getAllProducts")->name("product.all");
-        Route::get("/delete/{product}", "delete")->name("product.delete");
-        Route::post("/send", "addProduct")->name("product.send");
-        Route::get("/edit/{product}", "singleProduct")->name("product.single");
-        Route::post("/save/{product}", "edit")->name("product.save");
+    Route::controller(ShopController::class)->prefix("/product")->name("product.")->group(function(){
+        Route::get("/all", "getAllProducts")->name("all");
+        Route::get("/delete/{product}", "delete")->name("delete");
+        Route::post("/send", "addProduct")->name("send");
+        Route::get("/edit/{product}", "singleProduct")->name("single");
+        Route::post("/save/{product}", "edit")->name("save");
     });
 
 
-    Route::controller(ContactController::class)->prefix("/contact")->group(function(){
-       Route::get("/all", "getAllContacts")->name("contact.all");
-       Route::get("/delete/{contact}", "delete")->name("contact.delete");
-       Route::get("/edit/{id}", "singleContact")->name("contact.single");
-       Route::post("/save/{id}", "edit")->name("contact.save");
-       Route::post("/send", "sendContact")->name("contact.send");
+    Route::controller(ContactController::class)->prefix("/contact")->name("contact.")->group(function(){
+       Route::get("/all", "getAllContacts")->name("all");
+       Route::get("/delete/{contact}", "delete")->name("delete");
+       Route::get("/edit/{id}", "singleContact")->name("single");
+       Route::post("/save/{id}", "edit")->name("save");
+       Route::post("/send", "sendContact")->name("send");
     });
 
 });
