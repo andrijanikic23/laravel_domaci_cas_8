@@ -11,6 +11,14 @@ Route::get("/", [HomepageController::class, 'index']);
 
 Route::view("/about", "about");
 
+Route::get("/shop", [ShopController::class, "index"])
+    ->name("shop.index");
+Route::get("/product/{product}",[ShopController::class, "selectedProduct"])
+    ->name("product.selected");
+Route::post("/cart/add", [\App\Http\Controllers\ShoppingCartController::class, "addToCart"])
+    ->name("cart.add");
+Route::get("/cart", [\App\Http\Controllers\ShoppingCartController::class, "index"])
+    ->name("cart.index");
 
 Route::view("/contact", "contact");
 
@@ -25,9 +33,9 @@ Route::middleware(["auth", AdminCheckMiddleware::class])->prefix("admin")->group
     Route::controller(ShopController::class)->prefix("/product")->name("product.")->group(function(){
         Route::get("/all", "getAllProducts")->name("all");
         Route::get("/delete/{product}", "delete")->name("delete");
-        Route::post("/send", "addProduct")->name("send");
         Route::get("/edit/{product}", "singleProduct")->name("single");
         Route::post("/save/{product}", "edit")->name("save");
+        Route::post("/send", "addProduct")->name("send");
     });
 
 

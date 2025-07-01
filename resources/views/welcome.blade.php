@@ -14,7 +14,7 @@
     @endif
 
     @foreach($products as $product)
-       <p>{{ $product->name }}</p> 
+       <p>{{ $product->name }}       <a href="{{ route('product.selected', ['product' => $product->id]) }}">View product</a></p>
     @endforeach
 
     <form method="POST" action="/send-contact">
@@ -28,7 +28,7 @@
         <input name="email" type="email" placeholder="Unesite vasu email adresu">
         <input name="subject" type="text" placeholder="Unesite naslov poruke">
         <textarea name="description"></textarea>
-        <button>Posalji poruku</button>  
+        <button>Posalji poruku</button>
     </form>
 
 

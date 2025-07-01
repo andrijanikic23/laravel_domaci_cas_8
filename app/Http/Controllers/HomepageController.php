@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\HomepageModel;
+use Illuminate\Support\Facades\Session;
 
 class HomepageController extends Controller
 {
@@ -12,8 +13,8 @@ class HomepageController extends Controller
         $current_time = date("h:i:s");
         $current_hour = date("h");
         $products = HomepageModel::orderBy('id', 'desc')->take(6)->get();
-        return view("welcome", compact('current_time', 'current_hour', 'products'));    
-       
+        return view("welcome", compact('current_time', 'current_hour', 'products'));
+
     }
 
 }

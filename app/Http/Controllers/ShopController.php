@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Repositories\ShopRepository;
 use Illuminate\Http\Request;
 use App\Models\ShopModel;
+use Illuminate\Support\Facades\Session;
 
 class ShopController extends Controller
 {
@@ -16,6 +17,13 @@ class ShopController extends Controller
     public function __construct()
     {
         $this->shopRepo = new ShopRepository();
+    }
+
+    public function index()
+    {
+
+        $products = ShopModel::all();
+        return view("shop", compact("products"));
     }
     public function getAllProducts()
     {
@@ -57,6 +65,11 @@ class ShopController extends Controller
         $this->shopRepo->editProduct($product, $request);
 
         return redirect()->back();
+    }
+
+    public function selectedProduct(ShopModel $product)
+    {
+        return view("permalink", compact("product"));
     }
 
 }
