@@ -2,6 +2,10 @@
 
 @section("page_content")
 
+   @if(\Illuminate\Support\Facades\Session::has("error"))
+       <p class="text-danger">{{ \Illuminate\Support\Facades\Session::get("error") }}</p>
+   @endif
+
     <p>{{ $product->name }}</p>
     <p>{{ $product->description }}</p>
     <p>{{ $product->amount }}</p>
