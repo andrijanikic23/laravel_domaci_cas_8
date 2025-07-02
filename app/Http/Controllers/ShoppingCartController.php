@@ -12,28 +12,40 @@ class ShoppingCartController extends Controller
 
     public function index()
     {
+
+        $combined = [];
+        foreach(Session::get("product") as $item)
+        {
+            $product = ShopModel::firstWhere(["id" => $item["productId"]]);
+            if($product){
+                $combined[] = [
+                  "name" => $product->name,
+                  "quantity" => $item["quantity"],
+                  "price" => $product->price,
+                  "total" => $item["quantity"] * $product->price
+                ];
+            }
+        }
+
         return view("cart", [
-           "cart" => Session::get("product")
+            "combinedItems" => $combined
         ]);
     }
     public function addToCart(ShoppingCartRequest $request)
     {
         $product = ShopModel::where(["id" => $request->id])->first();
 
-        $productInStock = $product->amount;
 
-        $productName = $product->name;
-
-        if($productInStock < $request->quantity)
+        if($product->amount < $request->quantity)
         {
             return redirect()->back()->with(["error" => "Not enough product in stock"]);
         }
 
         Session::push("product", [
             "productId" => $request->id,
-            "productName" => $productName,
             "quantity" => $request->quantity
         ]);
+
 
         return redirect()->route("cart.index");
     }
