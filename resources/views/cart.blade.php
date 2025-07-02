@@ -3,16 +3,11 @@
 
 @section("page_content")
 
-    @foreach($products as $product)
-        @foreach($cart as $item)
-            @if($item['productId'] == $product->id)
-                <p>{{ $product->name }}</p>
-                <p>{{ $item["quantity"] }}</p>
-                <p>{{ $product->price }}</p>
-                <p>{{ $item["quantity"] * $product->price }}</p>
-            @endif
-        @endforeach
-
+    @foreach($combinedItems as $item)
+        <p>{{ $item["name"] }}</p>
+        <p>{{ $item["quantity"] }}</p>
+        <p>{{ $item["price"] }}</p>
+        <p>{{ $item["total"] }}</p>
     @endforeach
 
 @endsection
